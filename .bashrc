@@ -50,9 +50,9 @@ if [ -n "$force_color_prompt" ]; then
 	# We have color support; assume it's compliant with Ecma-48
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
 	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
+		color_prompt=yes
+	else
+		color_prompt=
     fi
 fi
 
@@ -87,28 +87,23 @@ fi
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-# some more ls aliases
-alias ll='ls -lv --group-directories-first'
-alias la='ls -A'
-alias l='ls -CF'
-
-# MY ALIASES
+# General purpose aliases
+alias sudo='sudo -s '
+alias ll='ls -lhA --group-directories-first --color=auto'
+alias tree='tree -C'
+alias grep='grep --color=auto'
 alias cp='cp -i'
 alias mv='mv -i'
-# -> Prevents accidentally clobbering files.
-alias mkdir='mkdir -p'
-
+alias mkdir='mkdir -pv'
+alias ..='cd .. && ll'
 alias h='history'
 alias j='jobs -l'
 alias which='type -a'
-alias ..='cd .. && ll'
-
-# Pretty-print of some PATH variables:
+alias du='du -kh'
+alias df='df -Th --total'
+alias free='free -mt'
 alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
-
-alias du='du -kh'    # Makes a more readable output.
-alias df='df -kTh'
 
 #Debian-related aliases
 alias update='sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get clean && sudo apt-get autoclean && sudo apt-get autoremove'
