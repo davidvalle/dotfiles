@@ -89,7 +89,7 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 
 # General purpose aliases
 alias sudo='sudo -s '
-alias ll='ls -lhA --group-directories-first --color=auto'
+alias ll='ls -lh --group-directories-first --color=auto'
 alias tree='tree -C'
 alias grep='grep --color=auto'
 alias cp='cp -i'
@@ -114,12 +114,22 @@ alias isinstalled='dpkg --get-selections | grep'
 
 #020 aliases
 alias go020="ssh 020mag@vl230.dinaserver.com"
+alias gimme020='sshfs 020mag@vl230.dinaserver.com:/home/020mag/www/ /home/david/020mag/ -o nonempty'
 alias 020resize="ls | xargs -i{} convert '{}[600x>]' {}"
 
 # ENTERTAINMENT-SOLUTIONS aliases
 alias godick='ssh david@10.1.1.1'
 alias gimmedick='sshfs david@10.1.1.1:/home/david/public_html/ /home/david/dickinson/ -o nonempty'
 
+#davidvalle.me aliases
+alias godavid="ssh davidvalle.org@ssh.strato.de"
+alias gimmedavid='sshfs davidvalle.org@ssh.strato.de:. /home/david/davidvalle.me/ -o nonempty'
+alias godavid="ssh davidvalle.org@ssh.strato.de"
+alias sassdavid="sass --watch /home/david/davidvalle.me/css/:/home/david/davidvalle.me/css --style compressed"
+
+#pi alises
+alias gopi="ssh pi@2.155.233.70"
+alias gimmepi='sshfs pi@2.155.233.70:/home/pi/projects/node/public/ /home/david/pi/ -o nonempty'
 
 #-------------------------------------------------------------
 # File & strings related functions:
