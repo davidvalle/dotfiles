@@ -117,10 +117,6 @@ alias go020="ssh 020mag@vl230.dinaserver.com"
 alias gimme020='sshfs 020mag@vl230.dinaserver.com:/home/020mag/www/ /home/david/020mag/ -o nonempty'
 alias 020resize="ls | xargs -i{} convert '{}[600x>]' {}"
 
-# ENTERTAINMENT-SOLUTIONS aliases
-alias godick='ssh david@10.1.1.1'
-alias gimmedick='sshfs david@10.1.1.1:/home/david/public_html/ /home/david/dickinson/ -o nonempty'
-
 #davidvalle.me aliases
 alias godavid="ssh davidvalle.org@ssh.strato.de"
 alias gimmedavid='sshfs davidvalle.org@ssh.strato.de:. /home/david/davidvalle.me/ -o nonempty'
