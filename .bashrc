@@ -120,7 +120,6 @@ alias 020resize="ls | xargs -i{} convert '{}[600x>]' {}"
 #davidvalle.me aliases
 alias godavid="ssh davidvalle.org@ssh.strato.de"
 alias gimmedavid='sshfs davidvalle.org@ssh.strato.de:. /home/david/davidvalle.me/ -o nonempty'
-alias godavid="ssh davidvalle.org@ssh.strato.de"
 alias sassdavid="sass --watch /home/david/davidvalle.me/css/:/home/david/davidvalle.me/css --style compressed"
 
 #pi alises
