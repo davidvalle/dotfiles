@@ -113,14 +113,14 @@ alias search='apt-cache search'
 alias isinstalled='dpkg --get-selections | grep'
 
 #020 aliases
-alias go020="ssh 020mag@vl230.dinaserver.com"
-alias gimme020='sshfs 020mag@vl230.dinaserver.com:/home/020mag/www/ /home/david/020mag/ -o nonempty'
+alias go020="ssh 020mag@vl18840.dinaserver.com"
+alias gimme020='sshfs 020mag@vl18840.dinaserver.com:/home/020mag/www/ /home/wizard/020mag/ -o nonempty'
 alias 020resize="ls | xargs -i{} convert '{}[600x>]' {}"
 
 #davidvalle.me aliases
 alias godavid="ssh davidvalle.org@ssh.strato.de"
-alias gimmedavid='sshfs davidvalle.org@ssh.strato.de:. /home/david/davidvalle.me/ -o nonempty'
-alias sassdavid="sass --watch /home/david/davidvalle.me/css/:/home/david/davidvalle.me/css --style compressed"
+alias gimmedavid='sshfs davidvalle.org@ssh.strato.de:. /home/wizard/davidvalle.me/ -o nonempty'
+alias sassdavid="sass --watch /home/wizard/davidvalle.me/css/:/home/wizard/davidvalle.me/css --style compressed"
 
 #pi alises
 alias gopi="ssh pi@2.155.233.70"
