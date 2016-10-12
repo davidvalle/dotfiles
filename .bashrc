@@ -1,94 +1,18 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+#
+# ~/.bashrc
+#
 
 # If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+[[ $- != *i* ]] && return
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-#[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-		color_prompt=yes
-	else
-		color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
+PS1='[\u@\h \W]\$ '
 
 # colored GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
 # General purpose aliases
 alias sudo='sudo -s '
+alias ls='ls --color=auto'
 alias ll='ls -lh --group-directories-first --color=auto'
 alias tree='tree -C'
 alias grep='grep --color=auto'
@@ -114,17 +38,20 @@ alias isinstalled='dpkg --get-selections | grep'
 
 #020 aliases
 alias go020="ssh 020mag@vl18840.dinaserver.com"
-alias gimme020='sshfs 020mag@vl18840.dinaserver.com:/home/020mag/www/ /home/wizard/020mag/ -o nonempty'
+alias gimme020='sshfs -o reconnect -o uid=1000 -o gid=1000 020mag@vl18840.dinaserver.com:/home/020mag/www/ /home/wizard/020mag/ -o nonempty'
 alias 020resize="ls | xargs -i{} convert '{}[600x>]' {}"
 
 #davidvalle.me aliases
 alias godavid="ssh davidvalle.org@ssh.strato.de"
-alias gimmedavid='sshfs davidvalle.org@ssh.strato.de:. /home/wizard/davidvalle.me/ -o nonempty'
+alias gimmedavid='sshfs -o reconnect -o uid=1000 -o gid=1000 davidvalle.org@ssh.strato.de:. /home/wizard/davidvalle.me/ -o nonempty'
 alias sassdavid="sass --watch /home/wizard/davidvalle.me/css/:/home/wizard/davidvalle.me/css --style compressed"
 
 #pi alises
 alias gopi="ssh pi@2.155.233.70"
-alias gimmepi='sshfs pi@2.155.233.70:/home/pi/projects/node/public/ /home/david/pi/ -o nonempty'
+alias gimmepi='sshfs -o reconnect -o uid=1000 -o gid=1000 pi@2.155.233.70:/home/pi/projects/node/public/ /home/wizard/pi/ -o nonempty'
+
+#4chan
+alias 4chan="find . -type f ! -name '*.jpg' -delete && rm */*s.jpg"
 
 #-------------------------------------------------------------
 # File & strings related functions:
@@ -158,17 +85,14 @@ Usage: fstr [-i] \"pattern\" [\"filename pattern\"] "
     fi
     find . -type f -name "${2:-*}" -print0 | \
 xargs -0 egrep --color=always -sn ${case} "$1" 2>&- | more
-
 }
 
 # Swap 2 filenames around, if they exist (from Uzi's bashrc).
 function swap() {
     local TMPFILE=tmp.$$
-
     [ $# -ne 2 ] && echo "swap: 2 arguments needed" && return 1
     [ ! -e $1 ] && echo "swap: $1 does not exist" && return 1
     [ ! -e $2 ] && echo "swap: $2 does not exist" && return 1
-
     mv "$1" $TMPFILE
     mv "$2" "$1"
     mv $TMPFILE "$2"
@@ -208,7 +132,6 @@ function sanitize() { chmod -R u=rwX,g=rX,o= "$@" ;}
 #-------------------------------------------------------------
 # Process/system related functions:
 #-------------------------------------------------------------
-
 function my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,bsdtime,command ; }
 function pp() { my_ps f | awk '!/awk/ && $0~var' var=${1:-".*"} ; }
 
@@ -234,12 +157,10 @@ function killps()
 # Inspired by 'dfc' utility.
 function mydf() {                       
     for fs ; do
-
         if [ ! -d $fs ]
         then
           echo -e $fs" :No such file or directory" ; continue
         fi
-
         local info=( $(command df -P $fs | awk 'END{ print $2,$3,$5 }') )
         local free=( $(command df -Pkh $fs | awk 'END{ print $4 }') )
         local nbstars=$(( 20 * ${info[1]} / ${info[0]} ))
@@ -278,7 +199,6 @@ function ii() {
     echo
 }
 
-
 #-------------------------------------------------------------
 # Misc utilities:
 #-------------------------------------------------------------
@@ -307,23 +227,3 @@ function corename() {
         echo -n $file : ; gdb --core=$file --batch | head -1
     done
 }
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
